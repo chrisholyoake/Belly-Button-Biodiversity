@@ -1,51 +1,57 @@
 function buildMetadata(sample) {
 
   // @TODO: Complete the following function that builds the metadata panel
+
   // Use `d3.json` to fetch the metadata for a sample
-  var metadata = '/metadata/${sample}';
-  // Use d3 to select the panel with id of `#sample-metadata`
-  d3.json(metadata).then(function(sample){
-    var sampleData = d3.select('#sample-metadata');
-  // Use `.html("") to clear any existing metadata
-  sampleData.html("");
-  // Use `Object.entries` to add each key and value pair to the panel
-  // Hint: Inside the loop, you will need to use d3 to append new
-  // tags for each key-value in the metadata.
-  Object.entries(sample).forEach(function([key,value]){
-    var row = sampleData.append("p")
-    row.text('${key}:${value}');
-    })
-  });
+  var metadataURL = '/metadata/${sample}';
+    // Use d3 to select the panel with id of `#sample-metadata`
+    d3.json(metadataURL).then(function(sample){
+      var sampleData = d3.select('#sample-metadata');
+    // Use `.html("") to clear any existing metadata
+      sampleData.html("");
+    // Use `Object.entries` to add each key and value pair to the panel
+    // Hint: Inside the loop, you will need to use d3 to append new
+    // tags for each key-value in the metadata.
+      Object.entries(sample).forEach(function([key,value]){
+        var row = sampleData.append("p");
+        row.text('${key}:${value}')
+      })
+    });
 }
 
 function buildCharts(sample) {
 
   // @TODO: Use `d3.json` to fetch the sample data for the plots
-  var chartData = '/samples/${sample}';
-  // @TODO: Build a Bubble Chart using the sample data
-  d3.json(chartData).then(function(data) {
-    var sample_data = data.sample_values;
-    var id_data = data.otu_id;
-    var sizes = data.sample_values;
-    var colors = data.otu_ids;
-    var labels = data.otu_lables;
+  var plotData = '/samples/${sample}';
+    // @TODO: Build a Bubble Chart using the sample data
+  d3.json(plotData).then(function(data){
+    var x_axis = data.otu_ids;
+    var y_axis = data.sample_values;
+    var size = data.sample_values;
+    var color = data.otu_ids;
+    var textValues = data.otu_labels;
+  
+    var bubble = {
+      x: x_axis,
+      y: y_axis,
+      text: textValues,
+      mode: 'markers',
+      marker: {
+        size: size,
+        color: color
+      }
+    };
 
-  var data1 = [{
-    x: sample_data,
-    y: id_data
-    text: labels,
-    mode: 'markers',
-      size: sizes,
-      color: colors
-    }
-  }];
+    var data = [bubble];
+    var layout = {
+      title: "Belly Button Bacteria",
+      xaxis: {title: "OTU ID"}
+    };
+    Plotly.newPlot("bubble", data, layout);
 
-
-  }
-
-  // @TODO: Build a Pie Chart
-  // HINT: You will need to use slice() to grab the top 10 sample_values,
-  // otu_ids, and labels (10 each).
+    // @TODO: Build a Pie Chart
+    // HINT: You will need to use slice() to grab the top 10 sample_values,
+    // otu_ids, and labels (10 each).
 }
 
 function init() {
