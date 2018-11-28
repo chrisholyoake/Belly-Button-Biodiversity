@@ -50,9 +50,24 @@ function buildCharts(sample) {
     Plotly.newPlot("bubble", data, layout);
 
     // @TODO: Build a Pie Chart
+    d3.json(plotData).then(function(data){
+      var values = data.sample_values.slice(0,10);
+      var labels = data.otu_ids.slice(0,10);
+      var display = data.otu_labels.slice(0,10);
+
+      var pie_chart = [{
+        values: values,
+        lables: labels,
+        hovertext: display,
+        type: "pie"
+      }];
+      Plotly.newPlot('pie',pie_chart);
+    });
+  });
+};
+
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
-}
 
 function init() {
   // Grab a reference to the dropdown select element
