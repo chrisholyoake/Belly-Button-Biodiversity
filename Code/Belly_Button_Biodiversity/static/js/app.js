@@ -3,10 +3,10 @@ function buildMetadata(sample) {
   // @TODO: Complete the following function that builds the metadata panel
 
   // Use `d3.json` to fetch the metadata for a sample
-  var metadataURL = '/metadata/${sample}';
+  var metadataURL = `/metadata/${sample}`;
     // Use d3 to select the panel with id of `#sample-metadata`
     d3.json(metadataURL).then(function(sample){
-      var sampleData = d3.select('#sample-metadata');
+      var sampleData = d3.select(`#sample-metadata`);
     // Use `.html("") to clear any existing metadata
       sampleData.html("");
     // Use `Object.entries` to add each key and value pair to the panel
@@ -14,28 +14,27 @@ function buildMetadata(sample) {
     // tags for each key-value in the metadata.
       Object.entries(sample).forEach(function([key,value]){
         var row = sampleData.append("p");
-        row.text('${key}:${value}')
+        row.text(`${key}:${value}`)
       })
     });
 }
 
 function buildCharts(sample) {
-
   // @TODO: Use `d3.json` to fetch the sample data for the plots
-  var plotData = '/samples/${sample}';
-    // @TODO: Build a Bubble Chart using the sample data
+  var plotData = `/samples/${sample}`;
+  // @TODO: Build a Bubble Chart using the sample data
   d3.json(plotData).then(function(data){
     var x_axis = data.otu_ids;
     var y_axis = data.sample_values;
     var size = data.sample_values;
     var color = data.otu_ids;
-    var textValues = data.otu_labels;
+    var texts = data.otu_labels;
   
     var bubble = {
       x: x_axis,
       y: y_axis,
-      text: textValues,
-      mode: 'markers',
+      text: texts,
+      mode: `markers`,
       marker: {
         size: size,
         color: color
@@ -70,6 +69,7 @@ function buildCharts(sample) {
     // otu_ids, and labels (10 each).
 
 function init() {
+  console.log('hello');
   // Grab a reference to the dropdown select element
   var selector = d3.select("#selDataset");
 
