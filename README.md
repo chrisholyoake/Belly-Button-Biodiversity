@@ -44,6 +44,7 @@ Used Plotly.js to build an interactive charts for the dashboard.
 ## Step 2 - Heroku
 
 Deployed Flask app to Heroku here: 
+https://sleepy-scrubland-93985.herokuapp.com/
 
 * Used sqlite file for the database.
 - - -
@@ -80,6 +81,8 @@ Use Flask API starter code to serve the data needed for your plots.
 
 - - -
 
-### Copyright
+### Author
 
-Data Boot Camp © 2018. All Rights Reserved.
+Christine Ton
+
+
